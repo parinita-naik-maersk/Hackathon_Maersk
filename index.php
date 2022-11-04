@@ -1,19 +1,22 @@
 <?php
-$data = file_get_contents("response.json");
-$response = json_decode($data,true);
+
 $json = file_get_contents('php://input');
 if($json)
 {
+    $data = file_get_contents("response.json");
+    $api_response = json_decode($data,true);
     $jsonObj = json_decode($json,true);  
-    for($i = 0 ; $i< count($jsonObj) ; $i++) {
-        if($jsonObj['cargoStuffingNumber'] == $response[$i]['cargoStuffingNumber']) {
-            $output = GetData($jsonObj['requestType'],$response[$i]);          
+
+    for($i = 0 ; $i< count($api_response) ; $i++) {
+        if($jsonObj['cargoStuffingNumber'] == $api_response[$i]['cargoStuffingNumber']) {
+            $output = GetData($jsonObj['requestType'],$api_response[$i]);          
             break;
          }
         }     
        
-    $jsonResponse = json_encode($output);
-    return base64_encode($jsonResponse);
+    $jsonResponse = $output;
+    $jsonObj['response'] = $jsonResponse;
+    print_r(base64_encode(json_encode($jsonObj)));
 }
 else
 {
@@ -34,9 +37,17 @@ function GetData($type, $jsonObj)
           break;
         case "getPOL":  
             $result = $jsonObj['portOfDischargeLocation'];          
-      }
-      $jsonObj['response'] = $result;
-      return $jsonObj['response'];
+        case "getFdl" : 
+            $a = json_decode($jsonObj['customerFinalPlaceOfDeliveryFacilityDetails'],true);  
+            $fdl = [] ; $k = 0;
+            foreach($a as $var)
+            {
+                $fdl[$k] = $var['CityName'];
+                $k++;      
+            }
+            $result = json_encode($fdl);
+        }
+      return $result;
 }    
 
 ?>

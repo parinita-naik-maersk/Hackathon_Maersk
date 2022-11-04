@@ -34,7 +34,7 @@
     "lastFreeTimeZone": "CET",
     "shipmentMessageSource": "Excel",
     "customerFinalPlaceOfDeliveryFacilityCode": "INBLRTRM",
-    "customerFinalPlaceOfDeliveryFacilityDetails": "[{\"FacilityCode\":\"INBLRTRM\",\"CityName\":\"Bangalore\",\"FullAddress\":\" \\r\\n80 FEET ROAD, KORAMANGALA,\\r\\n20TH MAIN, 6TH BLOCK\\r\\nBangalore 560095\\r\\n\\r\\nIndia\"}]",
+    "customerFinalPlaceOfDeliveryFacilityDetails": "[{\"FacilityCode\":\"INBLRTRM\",\"CityName\":\"Bangalore\"},{\"FacilityCode\":\"INPNQTRM\",\"CityName\":\"Pune\"},{\"FacilityCode\":\"INMUMTRM\",\"CityName\":\"Mumbai\"}]",
     "shipmentStatus": "APPROVED",
     "estimatedTimeOfDischargeDateTimeLocal": "2022-11-16T01:00:00Z",
     "estimatedTimeOfDischargeDateTimeUTC": "2022-11-16T00:00:00Z"
