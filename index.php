@@ -9,11 +9,11 @@ if($json)
 
     for($i = 0 ; $i< count($api_response) ; $i++) {
         if($jsonObj['cargoStuffingNumber'] == $api_response[$i]['cargoStuffingNumber']) {
-            $output = GetData($jsonObj['requestType'],$api_response[$i]);          
+            $output = GetData($jsonObj, $api_response[$i]);          
             break;
          }
-        }     
-       
+        } 
+    
     $jsonResponse = $output;
     $jsonObj['response'] = $jsonResponse;
     print_r(base64_encode(json_encode($jsonObj)));
@@ -25,19 +25,27 @@ else
 
 function GetData($type, $jsonObj)
 {
-    switch ($type) {
+    switch ($type['requestType']) {
+        case "updateLocation":    
+            {       
+            $city = $type['payload'];
+            return sprintf("Delivery successful for %s", $city);
+            break;
+            }
         case "getETA":
-            $result = $jsonObj['estimatedTimeOfArrivalDateTimeLocal'];           
+            return $jsonObj['estimatedTimeOfArrivalDateTimeLocal'];           
           break;
         case "getShipmentStatus":
-            $result = $jsonObj['shipmentStatus'];
+            return $jsonObj['shipmentStatus'];
           break;
         case "getEDD":
-            $result = $jsonObj['estimatedTimeOfDischargeDateTimeLocal'];
+            return $jsonObj['estimatedTimeOfDischargeDateTimeLocal'];
           break;
         case "getPOL":  
-            $result = $jsonObj['portOfDischargeLocation'];          
+            return $jsonObj['portOfDischargeLocation'];     
+            break;     
         case "getFdl" : 
+            {
             $a = json_decode($jsonObj['customerFinalPlaceOfDeliveryFacilityDetails'],true);  
             $fdl = [] ; $k = 0;
             foreach($a as $var)
@@ -45,10 +53,10 @@ function GetData($type, $jsonObj)
                 $fdl[$k] = $var['CityName'];
                 $k++;      
             }
-            $result = json_encode($fdl);
-            return $result;
-        }      
-     
+            return json_encode($fdl);
+            break;
+            }
+        }
 }    
 
 ?>
