@@ -46,8 +46,9 @@ function GetData($type, $jsonObj)
                 $k++;      
             }
             $result = json_encode($fdl);
-        }
-      return $result;
+            return $result;
+        }      
+     
 }    
 
 ?>
